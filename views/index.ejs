@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 w-full min-h-screen">
+    <div class="bg-white p-4 rounded-lg shadow-md w-full">
+      <div class="flex items-center justify-center mb-6 py-3 border-b-2">
+        <img
+          src="/images/rcvlogo1.png"
+          alt="RCV Logo"
+          class="w-[65px] h-[50px] mt-[-10px] absolute left-4"
+        />
+
+        <h2 class="text-2xl mt-[-10px] font-bold">RCV Enquiry</h2>
+      </div>
+      <% if (success){%>
+      <div
+        class="text-[#0a3622] font-bold mb-3 border border-[#92ceb2] rounded-md bg-[#d1e7dd] p-4 w-full"
+      >
+        Submitted Enquiry Successfully
+      </div>
+      <%}%>
+      <form action="/submit" method="POST" class="space-y-4">
+        <div>
+          <label class="block text-gray-700">Name:</label>
+          <input
+            type="text"
+            name="name"
+            required
+            class="w-full p-2 border rounded-md focus:outline focus:outline-blue-500"
+          />
+        </div>
+
+        <div>
+          <label class="block text-gray-700">Mobile No:</label>
+          <input
+            type="number"
+            name="mobile"
+            class="w-full p-2 border rounded-md focus:outline focus:outline-blue-500"
+          />
+        </div>
+
+        <div>
+          <label class="block text-gray-700">Email:</label>
+          <input
+            type="email"
+            name="email"
+            required
+            class="w-full p-2 border rounded-md focus:outline focus:outline-blue-500"
+          />
+        </div>
+
+        <div>
+          <label class="block text-gray-700">Location of Interest:</label>
+          <select
+            name="location"
+            class="w-full p-2 border rounded-md focus:outline focus:outline-blue-500"
+          >
+            <option value="select">--Select--</option>
+            <option value="Indirapuram/Ghaziabad">Indirapuram / Ghaziabad</option>
+            <option value="Noida/GreaterNoida">Noida / Greater Noida</option>
+            <option value="Faridabad">Faridabad</option>
+            <option value="Gurugram">Gurugram</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-gray-700">Type of Flat:</label>
+          <select
+            name="type"
+            class="w-full p-2 border rounded-md focus:outline focus:outline-blue-500"
+          >
+            <option value="select">--Select--</option>
+            <option value="1BHK">2 BHK</option>
+            <option value="2BHK">2 + Study BHK</option>
+            <option value="3BHK">3 BHK</option>
+            <option value="4BHK">4 BHK</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-gray-700">Budget:</label>
+          <select
+            name="budget"
+            class="w-full p-2 border rounded-md focus:outline focus:outline-blue-500"
+          >
+            <option value="select">--Select--</option>
+            <option value="Below ₹50 Lakh">Below ₹50 Lakh</option>
+            <option value="₹50 Lakh - ₹1 Crore">₹50 Lakh - ₹1 Crore</option>
+            <option value="₹1 crore - ₹2 crore">₹1 crore - ₹2 crore</option>
+            <option value="₹2 crore and Above">₹2 crore and Above</option>
+            <option></option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-gray-700">Purchase Timeline:</label>
+          <select
+            name="timeline"
+            class="w-full p-2 border rounded-md focus:outline focus:outline-blue-500"
+          >
+            <option value="select">--Select--</option>
+            <option value="Just surverying">Just surverying</option>
+            <option value="Immediately">Immediately</option>
+            <option value="3months">Within 3 months</option>
+            <option value="6months">More than 6 months</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-gray-700">Annual Income:</label>
+          <select
+            name="income"
+            class="w-full p-2 border rounded-md focus:outline focus:outline-blue-500"
+          >
+            <option value="select">--Select--</option>
+            <option value="Less than ₹10 lakhs">Less than ₹10 lakhs</option>
+            <option value="₹10 lakh - ₹20 lakh">₹10 lakh - ₹20 lakh</option>
+            <option value="₹20 lakh - ₹30 lakh">₹20 lakh - ₹30 lakh</option>
+            <option value="Above ₹30 lakh">Above ₹30 lakh</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-gray-700">Locality Preference:</label>
+          <select
+            name="preference"
+            class="w-full p-2 border rounded-md focus:outline focus:outline-blue-500"
+          >
+            <option value="select">--Select--</option>
+            <option value="resaleSociety">
+              Resale Society Apartment Flats
+            </option>
+            <option value="buliderFloor">Builder Floor</option>
+            <option value="readyToMove">Ready-to-move-in Flat</option>
+            <option value="underConstruction">
+              Under construction Property
+            </option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-gray-700">Profession:</label>
+          <select
+            name="profession"
+            class="w-full p-2 border rounded-md focus:outline focus:outline-blue-500"
+          >
+            <option value="select">--Select--</option>
+            <option value="ServiceClass">Service Class</option>
+            <option value="Business Class">Business Class</option>
+            <option value="Investor">Investor</option>
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </body>
+</html>
