@@ -19,6 +19,10 @@ const oAuth2Client = new google.auth.OAuth2(
 oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
 
 async function createTransporter() {
+  console.log("Client ID:", process.env.CLIENT_ID);
+console.log("Client Secret:", process.env.CLIENT_SECRET);
+console.log("Refresh Token:", process.env.REFRESH_TOKEN);
+
   const accessToken = await oAuth2Client.getAccessToken();
   
   return nodemailer.createTransport({
@@ -57,7 +61,7 @@ app.post("/submit", async (req, res) => {
       from: process.env.EMAIL_USER,
       to: email,
       subject: "RCV Enquiry Submitted",
-      text: `Hello ${name},\n\nThank you for submitting your enquiry. Our team will get back to you soon.\n\nDetails:\nMobile: ${mobile}\nLocation: ${location}\nBudget: ${budget}\n\nBest Regards,\nRCV Team`,
+      text: `Hello ${name},\n\nThank you for submitting your enquiry. Our team will get back to you soon.\n\nDetails:\nName: ${name}\nMobile: ${mobile}\nEmail: ${email}\nLocation: ${location}\nFlat: ${type}\nBudget: ${budget}\nTimeline: ${timeline}\nIncome: ${income}\nLocality: ${preference}\nProfession: ${profession}\n\nBest Regards,\nRCV Team`,
     };
 
     // Send email
