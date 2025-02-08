@@ -4,31 +4,35 @@ const app = express();
 const path = require("path");
 const user = require("./models/user");
 const nodemailer = require("nodemailer");
+const { google } = require("googleapis");
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// Nodemailer Transporter
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST, 
-  service: "gmail",
-  port: process.env.EMAIL_PORT,
-  secure: true,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_APPPASS,
-  },
-});
+// OAuth2 Credentials
+const oAuth2Client = new google.auth.OAuth2(
+  process.env.CLIENT_ID,
+  process.env.CLIENT_SECRET,
+  process.env.REDIRECT_URI
+);
+oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
 
-// Verify connection to email server
-transporter.verify((error, success) => {
-  if (error) {
-    console.log("Error connecting to email server:", error);
-  } else {
-    console.log("Email server is ready to send messages");
-  }
-});
+async function createTransporter() {
+  const accessToken = await oAuth2Client.getAccessToken();
+  
+  return nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      type: "OAuth2",
+      user: process.env.EMAIL_USER,
+      clientId: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      refreshToken: process.env.REFRESH_TOKEN,
+      accessToken: accessToken.token,
+    },
+  });
+}
 
 app.get("/", (req, res) => {
   res.render("index", { success: false });
@@ -44,6 +48,9 @@ app.post("/submit", async (req, res) => {
     });
     
     await newUser.save();
+
+    // Create transporter
+    const transporter = await createTransporter();
 
     // Email options
     const mailOptions = {
