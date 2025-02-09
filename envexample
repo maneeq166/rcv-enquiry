@@ -3,3 +3,6 @@ CLIENT_ID=
 CLIENT_SECRET=
 REDIRECT_URI="https://developers.google.com/oauthplayground"
 REFRESH_TOKEN=
+
+WHATSAPP_ACCESS_TOKEN=
+WHATSAPP_PHONE_ID=
