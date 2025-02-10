@@ -1,22 +1,33 @@
 {
-  "name": "anand-sir",
-  "version": "1.0.0",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "run": "app.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "axios": "^1.7.9",
-    "dotenv": "^16.4.7",
-    "ejs": "^3.1.10",
-    "express": "^4.21.2",
-    "googleapis": "^144.0.0",
-    "mongoose": "^8.10.0",
-    "nodemailer": "^6.10.0"
-  }
+    "name": "anand-sir",
+    "version": "1.0.0",
+    "main": "app.js",
+    "type": "commonjs",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "run": "app.js",
+        "dev": "nodemon app.js",
+        "format": "prettier --write .",
+        "format:check": "prettier --check ."
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "axios": "^1.7.9",
+        "dotenv": "^16.4.7",
+        "ejs": "^3.1.10",
+        "express": "^4.21.2",
+        "express-rate-limit": "^7.5.0",
+        "express-validator": "^7.2.1",
+        "googleapis": "^144.0.0",
+        "helmet": "^8.0.0",
+        "mongodb": "^6.13.0",
+        "mongoose": "^8.10.0",
+        "nodemailer": "^6.10.0"
+    },
+    "devDependencies": {
+        "prettier": "^3.5.0"
+    }
 }
