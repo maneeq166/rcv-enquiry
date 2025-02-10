@@ -1,5 +1,5 @@
-require("dotenv").config();
-const express = require("express");
+require('dotenv').config();
+const express = require('express');
 const configureExpress = require('./config/expressConfig');
 const oAuth2Client = require('./utils/oAuthClient');
 

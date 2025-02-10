@@ -1,12 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const User = require("../models/user");
-const createTransporter = require("../config/nodemailerConfig");
+const User = require('../models/user');
+const createTransporter = require('../config/nodemailerConfig');
 const sendWhatsAppMessage = require('../utils/whatsAppClient');
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
     try {
-        const { name, email, mobile, location, type, budget, timeline, income, preference, profession } = req.body;
+        const {
+            name,
+            email,
+            mobile,
+            location,
+            type,
+            budget,
+            timeline,
+            income,
+            preference,
+            profession,
+        } = req.body;
 
         // Save User Data to Database
         const newUser = new User({
@@ -31,24 +42,23 @@ router.post("/", async (req, res) => {
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: email,
-            subject: "RCV Enquiry Submitted",
+            subject: 'RCV Enquiry Submitted',
             text: `Hello ${name},\n\nThank you for submitting your enquiry. Our team will get back to you soon.\n\nDetails:\nName: ${name}\nMobile: ${mobile}\nEmail: ${email}\nLocation: ${location}\nFlat: ${type}\nBudget: ${budget}\nTimeline: ${timeline}\nIncome: ${income}\nLocality: ${preference}\nProfession: ${profession}\n\nBest Regards,\nRCV Team`,
         };
 
         // Send Email
         await transporter.sendMail(mailOptions);
-        console.log("Email Sent to:", email);
+        console.log('Email Sent to:', email);
 
         // WhatsApp Message
         const whatsappMessage = `Hello ${name},\n\nThank you for submitting your enquiry. Our team will get back to you soon.\n\nDetails:\nName: ${name}\nMobile: ${mobile}\nEmail: ${email}\nLocation: ${location}\nFlat: ${type}\nBudget: ${budget}\nTimeline: ${timeline}\nIncome: ${income}\nLocality: ${preference}\nProfession: ${profession}\n\nBest Regards,\nRCV Team`;
 
         await sendWhatsAppMessage(mobile, whatsappMessage);
 
-        res.render("index", { success: true });
-
+        res.render('index', { success: true });
     } catch (error) {
-        console.error("Error Occurred:", error);
-        res.status(500).send("An error occurred while processing your request.");
+        console.error('Error Occurred:', error);
+        res.status(500).send('An error occurred while processing your request.');
     }
 });
 
