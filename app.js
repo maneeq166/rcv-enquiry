@@ -1,9 +1,9 @@
 require("dotenv").config();
 const express = require("express");
-const axios = require("axios");
 const path = require("path");
-const nodemailer = require("nodemailer");
-const { google } = require("googleapis");
+const createTransporter = require("./utils/nodemailerConfig");
+const oAuth2Client = require('./utils/oAuthClient');
+const sendWhatsAppMessage = require('./utils/whatsAppClient');
 const User = require("./models/user"); // Ensure this model is correctly defined
 
 const app = express();
@@ -12,55 +12,7 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// OAuth2 Credentials for Gmail API
-const oAuth2Client = new google.auth.OAuth2(
-  process.env.CLIENT_ID,
-  process.env.CLIENT_SECRET,
-  process.env.REDIRECT_URI
-);
 oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
-
-// Function to Create Email Transporter
-async function createTransporter() {
-  return nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      type: "OAuth2",
-      user: process.env.EMAIL_USER,
-      clientId: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
-      refreshToken: process.env.REFRESH_TOKEN,
-      accessToken: process.env.ACCESS_TOKEN,
-    },
-  });
-}
-
-// Function to Send WhatsApp Message
-async function sendWhatsAppMessage(to, message) {
-  try {
-    const url = `https://graph.facebook.com/v18.0/${process.env.WHATSAPP_PHONE_ID}/messages`;
-
-    const response = await axios.post(
-      url,
-      {
-        messaging_product: "whatsapp",
-        to: to, // Format: "91XXXXXXXXXX" (International Format)
-        type: "text",
-        text: { body: message },
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.WHATSAPP_ACCESS_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    console.log("WhatsApp Message Sent:", response.data);
-  } catch (error) {
-    console.error("Error Sending WhatsApp Message:", error.response ? error.response.data : error.message);
-  }
-}
 
 // Home Route
 app.get("/", (req, res) => {

@@ -2,9 +2,11 @@
   "name": "anand-sir",
   "version": "1.0.0",
   "main": "app.js",
+  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run": "app.js"
+    "run": "app.js",
+    "dev": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
