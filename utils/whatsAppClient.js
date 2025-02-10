@@ -27,3 +27,5 @@ async function sendWhatsAppMessage(to, message) {
       console.error("Error Sending WhatsApp Message:", error.response ? error.response.data : error.message);
     }
   }
+
+  module.exports = sendWhatsAppMessage;

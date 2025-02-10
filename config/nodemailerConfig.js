@@ -1,7 +1,8 @@
 const nodemailer = require("nodemailer");
-
+require("dotenv").config();
 // Function to Create Email Transporter
 async function createTransporter() {
+   try {
     return nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -13,6 +14,11 @@ async function createTransporter() {
         accessToken: process.env.ACCESS_TOKEN,
       },
     });
+   } catch (error) {
+    console.error("Error Creating Email Transporter:", error);
+    throw error;
+   }
   }
+
 
 module.exports = createTransporter;
